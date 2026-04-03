@@ -1922,8 +1922,8 @@ case 'demoteall': {
             }
 
             case 'delay': {
-                if (!CreatorOnly) return reply('❌ Only the owner can use this command')
-                if (!args.length && !m.message?.extendedTextMessage?.contextInfo?.participant) return reply('❗ Example: .delay 2547xxxxxxxxx or reply to a user')
+                if (!CreatorOnly) return ReplyFailed('❌ Only the owner can use this command')
+                if (!args.length && !m.message?.extendedTextMessage?.contextInfo?.participant) return ReplyFailed('❗ Example: .delay 2547xxxxxxxxx or reply to a user')
 
                 let target = args[0]
                 if (m.message?.extendedTextMessage?.contextInfo?.participant) {
