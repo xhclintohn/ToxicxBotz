@@ -616,11 +616,11 @@ const handleGroupUpdates = async (sock, update) => {
 
         switch (command) {
 
-            case 'toxic':
             case 'bot':
+            case 'esebot':
             case 'start':
-            case 'ese':
-            case 'esebot': {
+            case 'menu':
+            case 'ese': {
                 const name = pushname
 
                 await sock.sendMessage(from, { react: { text: '💗', key: m.key } })
