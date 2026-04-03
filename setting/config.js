@@ -3,8 +3,8 @@ global.botAuthor   = '𝘅𝗵𝗰𝗹𝗶𝗻𝘁𝗼𝗻'
 global.tittle   = '𝗧𝗼𝘅𝗶𝗰𝘅𝗕𝗼𝘁𝘇'
 global.botVersion  = '1.0.0'
 
-global.Jid = `120363420097356422@newsletter`
-global.thumb = 'https://i.top4top.io/p_3704rafds1.jpg'
+global.Jid = `120363322461279856@newsletter`
+global.thumb = 'https://files.catbox.moe/s2atoj.jpeg'
 global.thumbLocal = './image/legend.jpg'
 
 global.connect = true
