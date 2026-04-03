@@ -1,5 +1,11 @@
 console.clear()
 require('./setting/config')
+process.on('uncaughtException', err => {
+    console.error('[ERROR]', err.message)
+})
+process.on('unhandledRejection', err => {
+    console.error('[REJECTED]', err?.message || err)
+})
 const {
     default: makeWASocket,
     useMultiFileAuthState,
@@ -35,19 +41,26 @@ const question = (text) => {
         output: process.stdout
     })
     return new Promise((resolve) => {
-        rl.question(text, resolve)
+        rl.question(text, (answer) => {
+            rl.close()
+            resolve(answer)
+        })
     })
 }
 
 async function connectToWhatsApp() {
+    console.log(chalk.cyan(`\n┏━━━━━━━━━━━━━━━━━━━━━━┓`))
+    console.log(chalk.cyan(`┃`) + chalk.bold.white(`  ⚡ ToxicxBotz Starting`) + chalk.cyan(`  ┃`))
+    console.log(chalk.cyan(`┗━━━━━━━━━━━━━━━━━━━━━━┛\n`))
     const { state, saveCreds } = await useMultiFileAuthState("./session")
     const SarDev = makeWASocket({
         printQRInTerminal: false,
-        syncFullHistory: true,
+        syncFullHistory: false,
         markOnlineOnConnect: true,
         connectTimeoutMs: 60000,
         defaultQueryTimeoutMs: 0,
-        keepAliveIntervalMs: 10000,        generateHighQualityLinkPreview: true,
+        keepAliveIntervalMs: 10000,
+        generateHighQualityLinkPreview: true,
         patchMessageBeforeSending: (message) => {
             const requiresPatch = !!(
                 message.buttonsMessage ||
@@ -238,6 +251,10 @@ if (messageType === 'image') {
             }
         } else if (connection === 'open') {
             SarDev.setStatus(global.botName)
+            const botNum = SarDev.user?.id?.split(':')[0] || ''
+            console.log(chalk.green(`\n✓ Connected as: +${botNum}`))
+            console.log(chalk.green(`✓ Bot Name: ${global.botName}`))
+            console.log(chalk.green(`✓ ToxicxBotz is ready!\n`))
         }
     })
 
