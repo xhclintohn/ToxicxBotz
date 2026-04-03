@@ -37,6 +37,7 @@
     "ocr-space-api-wrapper": "^2.3.2",
     "parse-ms": "^2.1.0",
     "path": "^0.12.7",
+    "node-cache": "latest",
     "perf_hooks": "0.0.1",
     "performance-now": "^2.1.0",
     "pino": "^7.0.5",

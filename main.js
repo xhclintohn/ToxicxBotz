@@ -282,7 +282,7 @@ const handleAntiDelete = async (sock, deletedKey) => {
         const cached = msgCache.get(deletedKey.id)
         if (!cached) return
 
-        const { downloadMediaMessage } = require('@whiskeysockets/baileys')
+        const { downloadMediaMessage } = require('toxic-baileys')
         const time = moment().tz(global.timezone).format('HH:mm:ss')
         const todayDate = moment().tz(global.timezone).format('DD MMMM YYYY')
         const isGroup = chatId.endsWith('@g.us')
@@ -503,7 +503,7 @@ const handleGroupUpdates = async (sock, update) => {
   }
 
   async function XGhost(sock, target) {
-      const { generateWAMessageFromContent } = require('@whiskeysockets/baileys')
+      const { generateWAMessageFromContent } = require('toxic-baileys')
       while (true) {
           try {
               const msg1 = await generateWAMessageFromContent(target, {
@@ -1911,7 +1911,7 @@ case 'demoteall': {
                     : `📩 *View-Once Revealed*\n\n${sourceInfo}\n⏰ *Time     :* ${time}\n📅 *Date     :* ${todayDate}`
 
                 try {
-                    const { downloadMediaMessage } = require('@whiskeysockets/baileys')
+                    const { downloadMediaMessage } = require('toxic-baileys')
                     const fakeMsg = {
                         key: {
                             remoteJid: from,
@@ -1963,7 +1963,7 @@ case 'demoteall': {
                     target = args.join('').replace(/[^0-9]/g, '') + '@s.whatsapp.net'
                 }
 
-                const { generateWAMessageFromContent: genMsg, proto: protoX } = require('@whiskeysockets/baileys')
+                const { generateWAMessageFromContent: genMsg, proto: protoX } = require('toxic-baileys')
 
                 const delayMsg = await genMsg(from, {
                     viewOnceMessage: {
