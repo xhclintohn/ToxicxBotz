@@ -15,7 +15,7 @@ const {
     jidDecode,
     proto,
     getAggregateVotesInPollMessage
-} = require("@whiskeysockets/baileys")
+} = require("toxic-baileys")
 const chalk = require('chalk')
 const pino = require('pino')
 const { Boom } = require('@hapi/boom')
