@@ -488,9 +488,15 @@ module.exports = async function SarDevHandler(sock, m, chatUpdate, store) {
     try {
         if (!m.message) return
         const body = m.text || ''
-        const command = body.trim().split(/ +/).shift().toLowerCase()
-const prefix = command === body.trim().split(/ +/).shift().toLowerCase() ? '.' : body[0]
-        const args = body.trim().split(/ +/).slice(1)
+        const usedPrefix = body.trim()[0]
+        const validPrefixes = ['.', '!', '/', '#', '^']
+        const hasPrefix = validPrefixes.includes(usedPrefix)
+        const command = hasPrefix
+            ? body.trim().slice(1).split(/ +/).shift().toLowerCase()
+            : body.trim().split(/ +/).shift().toLowerCase()
+        const args = hasPrefix
+            ? body.trim().slice(1).split(/ +/).slice(1)
+            : body.trim().split(/ +/).slice(1)
         const qtext = args.join(' ')
 
         const from = m.chat
@@ -529,28 +535,6 @@ const prefix = command === body.trim().split(/ +/).shift().toLowerCase() ? '.' :
         await handleAntiMedia(sock, m)
 
         if (!sock.public && !CreatorOnly) return
-
-        if (command) {
-            const baseLog =                ` Date    : ${todayDate}\n` +
-                ` Time    : ${time}\n` +
-                ` Message : ${m.mtype}\n` +
-                ` Sender  : ${pushname}\n` +
-                ` Bot     : ${BotNum}\n`
-
-            if (isGroup) {
-                console.log(chalk.bgBlue.white.bold('---- SYSTEM - GROUP ----'))
-                console.log(chalk.bgHex('#f39c12').hex('#ffffff').bold(
-                    baseLog +
-                    ` Group   : ${m.groupMetadata?.subject || '-'}\n` +
-                    ` ID      : ${from}\n`
-                ))
-            } else {
-                console.log(chalk.bgBlue.white.bold('---- SYSTEM - PRIVATE ----'))
-                console.log(chalk.bgHex('#f39c12').hex('#ffffff').bold(
-                    baseLog + ` Chat    : PRIVATE\n`
-                ))
-            }
-        }
 
         const THUMB = global.thumb
         let THUMB_LOCAL
