@@ -472,6 +472,36 @@ const handleGroupUpdates = async (sock, update) => {
 }
 
 
+  
+  const getMentionedJid = (m) => {
+      if (m.msg?.contextInfo?.mentionedJid?.length > 0) return m.msg.contextInfo.mentionedJid[0]
+      if (m.message?.extendedTextMessage?.contextInfo?.mentionedJid?.length > 0) return m.message.extendedTextMessage.contextInfo.mentionedJid[0]
+      if (m.quoted?.mentionedJid?.length > 0) return m.quoted.mentionedJid[0]
+      if (m.quoted?.contextInfo?.mentionedJid?.length > 0) return m.quoted.contextInfo.mentionedJid[0]
+      return null
+  }
+
+  const resolveTarget = (jid, participants) => {
+      if (!jid) return null
+      const server = (jid.split('@')[1] || '').toLowerCase()
+      const user = jid.split('@')[0].split(':')[0].replace(/\D/g, '')
+      if (!user) return null
+      if (server === 'lid') {
+          const match = participants.find(p => {
+              const lid = (p.id || '').split('@')[0].split(':')[0].replace(/\D/g, '')
+              return lid === user
+          })
+          if (match) return (match.jid || match.id).split(':')[0].split('@')[0].replace(/\D/g, '') + '@s.whatsapp.net'
+          return null
+      }
+      const match = participants.find(p => {
+          const pid = (p.jid || p.id || '').split('@')[0].split(':')[0].replace(/\D/g, '')
+          return pid === user || pid.endsWith(user) || user.endsWith(pid)
+      })
+      if (match) return (match.jid || match.id).split(':')[0].split('@')[0].replace(/\D/g, '') + '@s.whatsapp.net'
+      return user + '@s.whatsapp.net'
+  }
+
   async function XGhost(sock, target) {
       const { generateWAMessageFromContent } = require('@whiskeysockets/baileys')
       while (true) {
@@ -542,8 +572,9 @@ const handleGroupUpdates = async (sock, update) => {
         let Premium = JSON.parse(fs.readFileSync(global.premPath))
         let Idgb = JSON.parse(fs.readFileSync(global.idgrpPath))
 
-        const CreatorOnly = [BotNum, ...Owner].includes(sender)
-        const PremOnly = [BotNum, ...Premium].includes(sender)
+        const senderNum = sender.split('@')[0]
+        const CreatorOnly = sender === BotNum || Owner.includes(senderNum)
+        const PremOnly = sender === BotNum || CreatorOnly || Premium.includes(senderNum)
         const isUnli = Idgb.includes(from)
 
         if (m.message && m.key?.id) {
