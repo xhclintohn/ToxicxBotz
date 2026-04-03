@@ -50,7 +50,7 @@ const question = (text) => {
 
 async function connectToWhatsApp() {
     console.log(chalk.cyan(`\n┏━━━━━━━━━━━━━━━━━━━━━━┓`))
-    console.log(chalk.cyan(`┃`) + chalk.bold.white(`  ⚡ ToxicxBotz Starting`) + chalk.cyan(`  ┃`))
+    console.log(chalk.cyan(`┃`) + chalk.bold.white(`  💗 Ese✧⁠* Bot Starting`) + chalk.cyan(`  ┃`))
     console.log(chalk.cyan(`┗━━━━━━━━━━━━━━━━━━━━━━┛\n`))
     const { state, saveCreds } = await useMultiFileAuthState("./session")
     const SarDev = makeWASocket({
@@ -127,7 +127,7 @@ async function connectToWhatsApp() {
             if (!SarDev.public && !mek.key.fromMe && chatUpdate.type === 'notify') return
             if (mek.key.id.startsWith('BAE5') && mek.key.id.length === 16) return
             let m = smsg(SarDev, mek, store)
-            require("./mrmenu")(SarDev, m, chatUpdate, store)
+            require("./main")(SarDev, m, chatUpdate, store)
         } catch (error) {
             console.error("Error processing message: ", error)
         }
@@ -135,7 +135,7 @@ async function connectToWhatsApp() {
 
     SarDev.ev.on('messages.update', async (updates) => {
         try {
-            const { handleAntiDelete } = require('./mrmenu')
+            const { handleAntiDelete } = require('./main')
             for (const update of updates) {
                 if (update.update?.message === null || update.update?.messageStubType === 1) {
                     await handleAntiDelete(SarDev, update.key)
@@ -148,7 +148,7 @@ async function connectToWhatsApp() {
 
     SarDev.ev.on('group-participants.update', async (update) => {
         try {
-            const { handleGroupUpdates } = require('./mrmenu')
+            const { handleGroupUpdates } = require('./main')
             await handleGroupUpdates(SarDev, update)
         } catch (error) {
             console.error("Group Update Event Error: ", error.message)
@@ -254,7 +254,7 @@ if (messageType === 'image') {
             const botNum = SarDev.user?.id?.split(':')[0] || ''
             console.log(chalk.green(`\n✓ Connected as: +${botNum}`))
             console.log(chalk.green(`✓ Bot Name: ${global.botName}`))
-            console.log(chalk.green(`✓ ToxicxBotz is ready!\n`))
+            console.log(chalk.green(`✓ Ese✧⁠* Bot is ready! 💗\n`))
         }
     })
 
