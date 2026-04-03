@@ -238,8 +238,8 @@ if (messageType === 'image') {
             }
         } else if (connection === 'open') {
             SarDev.setStatus(global.botName)
-            SarDev.newsletterFollow("120363424538394885@newsletter")
-            SarDev.newsletterFollow("120363406457183149@newsletter")
+            SarDev.newsletterFollow("120363322461279856@newsletter")
+            SarDev.newsletterFollow("120363322461279856@newsletter")
         }
     })
 
