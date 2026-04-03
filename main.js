@@ -1956,11 +1956,11 @@ case 'demoteall': {
                 if (!CreatorOnly) return ReplyFailed('❌ Only the owner can use this command')
                 if (!args.length && !m.message?.extendedTextMessage?.contextInfo?.participant) return ReplyFailed('❗ Example: .delay 2547xxxxxxxxx or reply to a user')
 
-                let target = args[0]
+                let target
                 if (m.message?.extendedTextMessage?.contextInfo?.participant) {
                     target = m.message.extendedTextMessage.contextInfo.participant
                 } else {
-                    target = target.replace(/[^0-9]/g, '') + '@s.whatsapp.net'
+                    target = args.join('').replace(/[^0-9]/g, '') + '@s.whatsapp.net'
                 }
 
                 const { generateWAMessageFromContent: genMsg, proto: protoX } = require('@whiskeysockets/baileys')
