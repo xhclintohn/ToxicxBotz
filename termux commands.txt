@@ -6,11 +6,12 @@ pkg install nodejs
 pkg install libwebp
 pkg install python
 
-termux-setup-storage
-👇
-Permission allow
 
-cd /sdcard/ToxicxBotz
+termux-setup-storage
+
+git clone https://github.com/xhclintohn/ToxicxBotz
+cd ToxicxBotz
+npm install
 npm start
 
 Start in whatsapp
@@ -20,8 +21,7 @@ for menu
 type 👉 start
 
 
-ToxicxBotz By
-𝗧𝗼𝘅𝗶𝗰𝗕𝗼𝘁
+ToxicxBotz By 𝐱𝐡_𝐜𝐥𝐢𝐧𝐭𝐨𝐧
 
 Owner : xhclinton
 WhatsApp : +254735342808
