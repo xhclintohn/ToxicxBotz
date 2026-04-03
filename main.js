@@ -667,7 +667,7 @@ menuFakeQ.contextInfo.mentionedJid = [sender]
 
 await sock.sendMessage(from, {
     text: teks,
-}, { quoted: m })
+}, { quoted: menuFakeQ })
 
                 break
             }
