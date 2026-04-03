@@ -96,7 +96,6 @@ async function connectToWhatsApp() {
     store.bind(SarDev.ev)
 
     SarDev.ev.on('call', async (caller) => {
-        console.log("INCOMING CALL DETECTED")
     })
     SarDev.decodeJid = (jid) => {
         if (!jid) return jid
@@ -227,7 +226,6 @@ if (messageType === 'image') {
             attrs: { to: '@s.whatsapp.net', type: 'set', xmlns: 'status' },
             content: [{ tag: 'status', attrs: {}, content: Buffer.from(status, 'utf-8') }],
         })
-        console.log(chalk.yellow(`Bot Status Updated: ${status}`))
     }
 
     SarDev.public = global.publicX
