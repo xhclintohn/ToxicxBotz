@@ -1,0 +1,31 @@
+pkg update && pkg upgrade
+pkg install git
+pkg install yarn
+pkg install nano
+pkg install nodejs
+pkg install libwebp
+pkg install python
+
+termux-setup-storage
+👇
+Permission allow
+
+cd /sdcard/ToxicxBotz
+npm start
+
+Start in whatsapp
+for menu
+👇
+
+type 👉 start
+
+
+ToxicxBotz By
+𝗧𝗼𝘅𝗶𝗰𝗕𝗼𝘁
+
+Owner : xhclinton
+WhatsApp : +254735342808
+
+─────────────────────────────
+       ⚡ ToxicxBotz ⚡
+─────────────────────────────
