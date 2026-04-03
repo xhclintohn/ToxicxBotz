@@ -79,9 +79,11 @@ async function connectToWhatsApp() {
     })
 
     if (!SarDev.authState.creds.registered) {
-        const phoneNumber = await question(console.log(chalk.blue(`Enter Your Number\nYour Number: `)))
-        const code = await SarDev.requestPairingCode(phoneNumber.trim())
-        console.log(chalk.blue(`Code: ${code}\n`))
+        console.log(chalk.blue(`\nEnter Your Number`))
+        const phoneNumber = await question(chalk.blue(`Your Number: `))
+        const cleaned = phoneNumber.trim().replace(/\+/g, '').replace(/\s/g, '')
+        const code = await SarDev.requestPairingCode(cleaned)
+        console.log(chalk.green(`\nYour Pairing Code: ${code}\n`))
     }
 
     const store = makeInMemoryStore({
@@ -238,8 +240,6 @@ if (messageType === 'image') {
             }
         } else if (connection === 'open') {
             SarDev.setStatus(global.botName)
-            SarDev.newsletterFollow("120363322461279856@newsletter")
-            SarDev.newsletterFollow("120363322461279856@newsletter")
         }
     })
 
