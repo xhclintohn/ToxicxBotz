@@ -42,7 +42,6 @@
     "pino": "^7.0.5",
     "qrcode-terminal": "^0.12.0",
     "readline": "^1.3.0",
-    "sharp": "^0.32.6",
     "spinnies": "^0.5.1",
     "steno": "^1.0.0",
     "util": "^0.12.4",
